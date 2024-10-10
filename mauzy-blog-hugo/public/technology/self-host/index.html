@@ -44,41 +44,43 @@
 
 
   
+
+
+
+
+
   
-
-
-
-
+  
+  
 
 
 <!-- Open Graph image and Twitter Card metadata -->
 
-<title itemprop="name">Mauzy</title>
-<meta property="og:title" content=Mauzy />
-<meta name="twitter:title" content=Mauzy />
-<meta itemprop="name" content=Mauzy />
-<meta name="application-name" content=Mauzy />
+<title itemprop="name">Mauzy - Self Host Your Website without Opening Ports</title>
+<meta property="og:title" content=Mauzy&#32;-&#32;Self&#32;Host&#32;Your&#32;Website&#32;without&#32;Opening&#32;Ports />
+<meta name="twitter:title" content=Mauzy&#32;-&#32;Self&#32;Host&#32;Your&#32;Website&#32;without&#32;Opening&#32;Ports />
+<meta itemprop="name" content=Mauzy&#32;-&#32;Self&#32;Host&#32;Your&#32;Website&#32;without&#32;Opening&#32;Ports />
+<meta name="application-name" content=Mauzy&#32;-&#32;Self&#32;Host&#32;Your&#32;Website&#32;without&#32;Opening&#32;Ports />
 <meta property="og:site_name" content="" />
 
 
-<meta name="description" content="Hey there! I hope there is something of use here for you!" />
-<meta itemprop="description" content="Hey there! I hope there is something of use here for you!" />
-<meta property="og:description" content="Hey there! I hope there is something of use here for you!" />
-<meta name="twitter:description" content="Hey there! I hope there is something of use here for you!" />
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
 
 
-<base href="//localhost:1313/" />
-<link rel="canonical" href="//localhost:1313/" itemprop="url" />
-<meta name="url" content="//localhost:1313/" />
-<meta name="twitter:url" content="//localhost:1313/" />
-<meta property="og:url" content="//localhost:1313/" />
+<base href="//localhost:1313/technology/self-host/" />
+<link rel="canonical" href="//localhost:1313/technology/self-host/" itemprop="url" />
+<meta name="url" content="//localhost:1313/technology/self-host/" />
+<meta name="twitter:url" content="//localhost:1313/technology/self-host/" />
+<meta property="og:url" content="//localhost:1313/technology/self-host/" />
 
 
 <meta property="og:updated_time" content="2024-10-09T07:07:07&#43;01:00" />
 
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href='//localhost:1313/sitemap.xml' />
-<link href="//localhost:1313/index.xml" rel="alternate" type="application/rss+xml" title="" />
 
 <meta name="robots" content="index,follow" />
 <meta name="googlebot" content="index,follow" />
@@ -306,15 +308,295 @@ powered by 2 hamsters in my PC
 </aside>
 
             <main class="content container">
-                <div class="posts">
+                <div class="post">
+  <div class="info">
+  <h1 class="post-title">
+    <a href="//localhost:1313/technology/self-host/">Self Host Your Website without Opening Ports</a>
+  </h1>
+
+  <div class="headline">
+    <div>
+      
+      
+      <time datetime=" 2024-10-09T07:07:07&#43;0100" class="post-date">
+        October 9, 2024
+      </time>
+      
+      <span> - </span>
+      <span class="reading-time">
+        
+          
+        
+
+        <span>4 mins read</span>
+      </span>
+    </div>
+
     
+    <ul class="tags">
+      
+      <li class="tag-Web Development">
+        <a href="//localhost:1313/tags/web-development">Web Development</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+
+  
+  
+
+  
+</div>
+
+  <p>This post is a follow along to a Youtube video walk-through that I recorded. We will be setting up a home server to host a web application without opening any ports on my home network. To accomplish this I&rsquo;ll be using a Cloudflare tunnel.</p>
+<blockquote>
+<p>[!note]
+The <code>$</code> denotes a terminal command. Anything before <code>$</code> denotes the current working directory.</p>
+</blockquote>
+<h2 id="0-prerequisites">0. Prerequisites</h2>
+<ol>
+<li>Remote Server</li>
+<li>Cloudflare Account</li>
+<li>Reliable Internet Connection</li>
+</ol>
+<blockquote>
+<p>[!warning]
+A little disclaimer: I am not a professional; just a student. Do your own research but this should help you get up and running. For the most part I am just following Cloudflare and other documentation. I highly recommend you read through official documentation as needed.</p>
+</blockquote>
+<h2 id="1-configure-server">1. Configure Server</h2>
+<ol>
+<li>Make sure you have root permissions
+<ol>
+<li><code>sudo -l</code> should output (ALL : ALL) ALL on the current user.</li>
+</ol>
+</li>
+<li>Add current user to sudo as root
+<ol>
+<li><code>usermod -aG sudo mauzy</code></li>
+</ol>
+</li>
+<li>Install OpenSSH
+<ol>
+<li><code>ufw allow OpenSSH</code></li>
+<li><code>ufw enable</code></li>
+<li><code>ufw status</code></li>
+</ol>
+</li>
+<li>Install nginx
+<ol>
+<li><code>sudo ufw allow 'Nginx HTTP'</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="2-add-your-site-to-cloudflare">2. Add your site to Cloudflare</h2>
+<ol>
+<li>Register using Cloudflare</li>
+<li>If you have an existing domain, click add site</li>
+<li>Copy the name servers from Cloudflare to your registrar
+<ul>
+<li>Ensure DNSSEC is disabled before doing this</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>[!note]
+DNS Records:
+This is where you can show everyone on Discord how cool you are by adding your website as a connection.</p>
+</blockquote>
+<h2 id="3-additional-cloudflare-settings">3. Additional Cloudflare settings</h2>
+<h3 id="configure-dnssec">Configure DNSSEC</h3>
+<ol>
+<li>
+<p>Enable in Cloudflare</p>
+<ol>
+<li>DNS &gt; Settings</li>
+<li>Enable DNSSEC</li>
+</ol>
+</li>
+<li>
+<p>Find walkthrough for your registrar</p>
+</li>
+<li>
+<p>NameCheap</p>
+<ol>
+<li>Manage &gt; Advanced DNS</li>
+<li>Enable DNSSEC</li>
+<li>Copy values from Cloudflare</li>
+<li>Save it and wait an hour</li>
+</ol>
+</li>
+<li>
+<p>Set SSl/TLS encryption mode to Full(strict)</p>
+<ol>
+<li>This ensures a secure connection between your origin server and Cloudflare.</li>
+<li>Cloudflare will validate the SSL certificate on your server.</li>
+<li>This reduces the chances of man-in-the-middle attacks
+<ol>
+<li>Find it in SSL/TLS &gt; Overview</li>
+<li>Make sure the SSL/TLS recommender is on</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>Enable Always use Https</p>
+<ol>
+<li>SSL/TLS &gt; Edge Certificates</li>
+</ol>
+</li>
+<li>
+<p>Set Authenticated Origin Pulls</p>
+<ol>
+<li>This ensures only requests from Cloudflare with a valid certificate are accepted by your origin server. It helps to protect against unauthorizes access to your server.</li>
+<li>SSL/TLS &gt; Origin Server</li>
+</ol>
+</li>
+</ol>
+<h2 id="3-create-a-tunnel-and-download-the-daemon-for-your-operating-system">3. Create a tunnel and download the daemon for your Operating System</h2>
+<ol>
+<li>Go to your newly added site in Cloudflare</li>
+<li>In the access tab, Launch the Zero Trust Platform. They move the location of this all of the time for no reason.</li>
+<li>Copy and paste into your server shell</li>
+</ol>
+<h2 id="4-setup-firewall">4. Setup Firewall</h2>
+<ol>
+<li>Download the firewall setup script from my Github page</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BASH" data-lang="BASH"><span style="display:flex;"><span>~/$ curl https://raw.githubusercontent.com/Mauzy0x/Scripts/main/Cloudflare%20IPtable%20setup.sh &gt;&gt; ipScript.sh
+</span></span></code></pre></div><ol start="3">
+<li>Make the script executable</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BASH" data-lang="BASH"><span style="display:flex;"><span>~/$ chmod +x ipScript.sh
+</span></span></code></pre></div><ol start="5">
+<li>Run the script</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BAsh" data-lang="BAsh"><span style="display:flex;"><span>~/$ ./ipScript.sh
+</span></span></code></pre></div><h2 id="5-nginx">5. Nginx</h2>
+<ol>
+<li>Set up server block
+<ol>
+<li>Create a directory for your domain with the <code>p</code> flag to create any necessary parent directories</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BASH" data-lang="BASH"><span style="display:flex;"><span>	sudo mkdir -p /var/www/your_domain/html
+</span></span></code></pre></div><ol start="2">
+<li>Now assign ownership of the directory to the current user</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BASH" data-lang="BASH"><span style="display:flex;"><span>	sudo chown -R $USER:$USER /var/www/your_domain/html
+</span></span></code></pre></div><ol start="3">
+<li>Ensure permissions are correct with chmod
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-BASH" data-lang="BASH"><span style="display:flex;"><span>sudo chmod -R <span style="color:#ae81ff">755</span> /var/www/your_domain
+</span></span></code></pre></div><ul>
+<li>This uses octal notation. This recursively ensures the owner has full permissions</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Configure Nginx server block
+<ol>
+<li><code>sudo rm /etc/nginx/sites-enabled/default</code></li>
+<li><code>sudo nano /etc/nginx/sites-available/your_domain</code></li>
+</ol>
+</li>
+<li>Configure nginx configuration file</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    listen 5552;
+</span></span><span style="display:flex;"><span>    listen <span style="color:#f92672">[</span>::<span style="color:#f92672">]</span>:5552;
+</span></span><span style="display:flex;"><span>    server_name localhost;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    root /var/www/Mauzy-Site/;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location / <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        try_files $uri /html/$uri; <span style="color:#75715e"># Serve from /html/ if not found</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location ~* <span style="color:#ae81ff">\.</span><span style="color:#f92672">(</span>?:gif|css|js|<span style="color:#f92672">)</span>$ <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        try_files $uri <span style="color:#f92672">=</span>404;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location /html/ <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        index index.html index.htm;
+</span></span><span style="display:flex;"><span>        try_files $uri $uri/index.html $uri.html <span style="color:#f92672">=</span>404;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    error_page 404 <span style="color:#f92672">=</span> /404.html;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ol start="3">
+<li>Allow HTTPS traffic with Nginx Full which allows https and http
+<ol>
+<li><code>sudo ufw allow 'Nginx Full'</code></li>
+<li><code>sudo ufw reload</code></li>
+</ol>
+</li>
+<li>Test config
+<ol>
+<li><code>sudo nginx -t</code></li>
+<li><code>sudo systemctl restart nginx</code>
+<ol>
+<li>In most cases you can just reload nginx to make changes so that applications don&rsquo;t go down. But in this case, let us restart nginx.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="6-trouble-shooting-connection">6. Trouble Shooting Connection</h2>
+<ul>
+<li>If for whatever reason something is not working, lets troubleshoot.
+<ol>
+<li>Let us first make sure we are properly hosting our webpage
+<ul>
+<li><code>curl localhost:portNo</code></li>
+<li>If this command does not return your HTML then there is an issue with your NGINX configuration</li>
+</ul>
+</li>
+<li>If you get an error where it is &lsquo;argo tunnel error&rsquo; there is an issue where Cloudflare cannot see your service.
+<ol>
+<li>Is your tunnel config pointing to http://localhost:portNo ?
+It needs to be http and it needs to be the same port number specified in your Nginx config.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+
+  
+  <hr>
+<div class="footer">
+    
+	    
+	    
     
 </div>
 
-
-
+  
+</div>
             </main>
             
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0-prerequisites">0. Prerequisites</a></li>
+    <li><a href="#1-configure-server">1. Configure Server</a></li>
+    <li><a href="#2-add-your-site-to-cloudflare">2. Add your site to Cloudflare</a></li>
+    <li><a href="#3-additional-cloudflare-settings">3. Additional Cloudflare settings</a>
+      <ul>
+        <li><a href="#configure-dnssec">Configure DNSSEC</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-create-a-tunnel-and-download-the-daemon-for-your-operating-system">3. Create a tunnel and download the daemon for your Operating System</a></li>
+    <li><a href="#4-setup-firewall">4. Setup Firewall</a></li>
+    <li><a href="#5-nginx">5. Nginx</a></li>
+    <li><a href="#6-trouble-shooting-connection">6. Trouble Shooting Connection</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
         </div>
     </body>
 </html>
