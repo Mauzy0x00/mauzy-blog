@@ -30,7 +30,7 @@
   }
 
 /*Light Theme Variables*/
-.light-theme {
+body {
     --layer-0: hsl(var(--layer-hue-sat), 89%);
     --layer-1: hsl(var(--layer-hue-sat), 99%);
     --layer-2: hsl(var(--layer-hue-sat), 96%);
@@ -56,7 +56,7 @@
   
 /*Common Variables*/
 body.dark-theme,
-body.light-theme {
+body {
   --layer-hue-sat: 235, 15%;
 
   --on-layer: hsl(var(--on-layer-tuple));

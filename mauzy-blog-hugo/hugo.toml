@@ -1,4 +1,4 @@
-# baseURL = ""
+baseURL = "localhost:80"
 languageCode = "en-us"
 theme = "poison"
 paginate = 10

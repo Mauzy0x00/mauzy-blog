@@ -9,8 +9,7 @@
         
         --moon-sun-color: {{ with .Site.Params.moon_sun_color }}{{ . }}{{ else }}#FFF{{ end }};
         --moon-sun-background-color: {{ with .Site.Params.moon_sun_background_color }}{{ . }}{{ else }}#515151{{ end }};
-    }
-    body.light-theme{
+
         --text-color: {{ with .Site.Params.text_color }}{{ . }}{{ else }}#222{{ end }};
         --bkg-color: {{ with .Site.Params.content_bg_color }}{{ . }}{{ else }}#FAF9F6{{ end }};
         --post-title-color: {{ with .Site.Params.post_title_color }}{{ . }}{{ else }}#303030{{ end }};
